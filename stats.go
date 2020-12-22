@@ -1,6 +1,8 @@
 package indicators
 
 import "math"
+import _ "fmt"
+import _ "strconv"
 
 type mfloat []float64
 
@@ -64,13 +66,36 @@ func SubSlices(slice1, slice2 []float64) []float64 {
 func AddSlices(slice1, slice2 []float64) []float64 {
 
 	var result []float64
-
-	for i := 0; i < len(slice1); i++ {
+	// println(len(slice1))
+	// println(len(slice2))
+	for i, _ := range(slice2) {
 		result = append(result, slice1[i]+slice2[i])
 	}
-
+	// println("done adding")
 	return result	
 }
+
+func AddSlicesFromReverse(slice1, slice2 []float64) []float64 {
+
+	var result []float64
+	// println(len(slice1))
+	// println(len(slice2))
+	if len(slice1) > len(slice2) {
+		for i, _ := range(slice2) {
+			result = append(result, slice1[len(slice1) - i - 1]+slice2[len(slice2) - i - 1])
+		}
+	} else {
+		for i, _ := range(slice1) {
+			result = append(result, slice1[len(slice1) - i]+slice2[len(slice2) - i])
+		}
+	}
+	var reversedResults []float64
+	for i, _ := range result {
+		reversedResults = append(reversedResults, result[len(result) - i - 1])
+	}
+	// println("done adding")
+	return reversedResults	
+} 
 
 // DivSlice divides a slice by a float.
 func DivSlice(slice []float64, n float64) []float64 {
@@ -82,4 +107,25 @@ func DivSlice(slice []float64, n float64) []float64 {
 	}
 
 	return result
+}
+
+func sliceMax(slice []float64) float64 {
+	var m float64 = 0
+	for i, e := range slice {
+	    if i == 0 || e > m {
+	        m = e
+	    }
+	}
+	// println(m)
+	return m
+}
+
+func sliceMin(slice []float64) float64 {
+	var m float64 = math.MaxFloat64
+	for i, e := range slice {
+	    if i == 0 || e < m {
+	        m = e
+	    }
+	}
+	return m
 }
